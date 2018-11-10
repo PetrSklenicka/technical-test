@@ -4,6 +4,8 @@ import com.barclays.test.pojo.CountriesVATsPojo;
 import com.barclays.test.dto.CountryDto;
 import com.barclays.test.pojo.PeriodPojo;
 import com.barclays.test.pojo.RatePojo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,7 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class VatServiceImpl implements VatService {
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
+
+    public VatServiceImpl(RestTemplateBuilder builder) {
+        restTemplate = builder.build();
+    }
 
     public List<CountryDto> getAllCountries() {
         CountriesVATsPojo countriesVATsPojo = restTemplate.getForObject("http://jsonvat.com/", CountriesVATsPojo.class);
@@ -37,7 +43,7 @@ public class VatServiceImpl implements VatService {
         return getAllCountries()
                 .stream()
                 .sorted(Comparator.comparing(CountryDto::getStandardVAT).reversed())
-                .limit(3)
+                .limit(numberOfCountries)
                 .collect(Collectors.toList());
     }
 

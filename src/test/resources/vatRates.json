@@ -1,0 +1,37 @@
+{
+   "details":"http://github.com/adamcooke/vat-rates",
+   "version":null,
+   "rates":[
+      {
+         "name":"Spain",
+         "code":"ES",
+         "country_code":"ES",
+         "periods":[
+            {
+               "effective_from":"0000-01-01",
+               "rates":{
+                  "super_reduced":4,
+                  "reduced":10,
+                  "standard":21
+               }
+            },
+            {
+               "effective_from":"2015-01-01",
+               "rates":{
+                  "super_reduced":4,
+                  "reduced":10,
+                  "standard":30
+               }
+            },
+            {
+               "effective_from":"2017-01-01",
+               "rates":{
+                  "super_reduced":4,
+                  "reduced":10,
+                  "standard":35
+               }
+            }
+         ]
+      }
+   ]
+}

@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface VatService {
 
-    public List<CountryDto> getAllCountries();
+    List<CountryDto> getAllCountries();
 
-    public List<CountryDto> getCountriesWithLowestStandardVAT(int numberOfCountries);
+    List<CountryDto> getCountriesWithLowestStandardVAT(int numberOfCountries);
 
-    public List<CountryDto> getCountriesWithHighestStandardVAT(int numberOfCountries);
+    List<CountryDto> getCountriesWithHighestStandardVAT(int numberOfCountries);
 }
