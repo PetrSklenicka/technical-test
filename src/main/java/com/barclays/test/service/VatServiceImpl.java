@@ -1,20 +1,23 @@
 package com.barclays.test.service;
 
-import com.barclays.test.pojo.CountriesVATsPojo;
 import com.barclays.test.dto.CountryDto;
+import com.barclays.test.pojo.CountriesVATsPojo;
 import com.barclays.test.pojo.PeriodPojo;
 import com.barclays.test.pojo.RatePojo;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 public class VatServiceImpl implements VatService {
+
+    @Value("${api.vat.url}")
+    private String apiUrl;
 
     private RestTemplate restTemplate;
 
@@ -23,7 +26,7 @@ public class VatServiceImpl implements VatService {
     }
 
     public List<CountryDto> getAllCountries() {
-        CountriesVATsPojo countriesVATsPojo = restTemplate.getForObject("http://jsonvat.com/", CountriesVATsPojo.class);
+        CountriesVATsPojo countriesVATsPojo = restTemplate.getForObject(apiUrl, CountriesVATsPojo.class);
         return countriesVATsPojo
                 .getRates()
                 .stream()
@@ -32,18 +35,21 @@ public class VatServiceImpl implements VatService {
     }
 
     public List<CountryDto> getCountriesWithLowestStandardVAT(int numberOfCountries) {
-        return getAllCountries()
+        return getSortedCountries(Comparator.comparing(CountryDto::getStandardVAT))
                 .stream()
-                .sorted(Comparator.comparing(CountryDto::getStandardVAT))
-                .limit(numberOfCountries)
-                .collect(Collectors.toList());
+                .limit(numberOfCountries).collect(Collectors.toList());
     }
 
     public List<CountryDto> getCountriesWithHighestStandardVAT(int numberOfCountries) {
+        return getSortedCountries(Comparator.comparing(CountryDto::getStandardVAT).reversed())
+                .stream()
+                .limit(numberOfCountries).collect(Collectors.toList());
+    }
+
+    private List<CountryDto> getSortedCountries(Comparator<CountryDto> comparator) {
         return getAllCountries()
                 .stream()
-                .sorted(Comparator.comparing(CountryDto::getStandardVAT).reversed())
-                .limit(numberOfCountries)
+                .sorted(comparator)
                 .collect(Collectors.toList());
     }
 
