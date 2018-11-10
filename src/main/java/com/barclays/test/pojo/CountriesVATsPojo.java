@@ -2,6 +2,7 @@ package com.barclays.test.pojo;
 
 import com.fasterxml.jackson.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +20,9 @@ public class CountriesVATsPojo {
     @JsonProperty("version")
     private Object version;
     @JsonProperty("rates")
-    private List<RatePojo> rates = null;
+    private List<RatePojo> rates = new ArrayList<>();
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("details")
     public String getDetails() {

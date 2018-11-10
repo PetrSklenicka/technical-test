@@ -20,7 +20,7 @@ public class PeriodPojo {
     @JsonProperty("rates")
     private RatesPojo rates;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("effective_from")
     public LocalDate getEffectiveFrom() {

@@ -28,7 +28,7 @@ public class RatePojo {
     @JsonProperty("periods")
     private List<PeriodPojo> periods = null;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("name")
     public String getName() {

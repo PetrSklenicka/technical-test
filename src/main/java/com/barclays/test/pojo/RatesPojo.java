@@ -33,7 +33,7 @@ public class RatesPojo {
     @JsonProperty("parking")
     private Double parking;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("super_reduced")
     public Double getSuperReduced() {
